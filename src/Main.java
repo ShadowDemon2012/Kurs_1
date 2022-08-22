@@ -11,10 +11,10 @@ public class Main {
         employees[9] = new Employee(2, "Антон", "Васильев", "Дмитриевич", 10);
         printAllEmployeesInfo();
         System.out.println(findingFirstElementOfArrayNotNull());
-        System.out.println(findingSalaryOfAllEmployees());
-        System.out.println(findingMinSalary());
-        System.out.println(findingMaxSalary());
-        System.out.println(findingAverageSalary());
+        System.out.println(findingSalarySumOfAllEmployees());
+        System.out.println("Минимальная зарплата "+findingMinSalary());
+        System.out.println("Максимальная зарплата "+findingMaxSalary());
+        System.out.println("Средняя зарплата "+findingAverageSalary());
         printingEmployeesFullName();
     }
 
@@ -26,20 +26,21 @@ public class Main {
         }
     }
 
-    public static double findingFirstElementOfArrayNotNull() {
-        double firstElement = 0;
+    public static int findingFirstElementOfArrayNotNull() {
+        int firstElementId = 0;
         for (int i = 0; i < employees.length; i++) {
             if (employees[i] != null) {
-                firstElement = employees[i].getSalary();
+                firstElementId = i;
                 break;
             }
         }
-        return firstElement;
+        return firstElementId;
     }
 
-    public static double findingSalaryOfAllEmployees() {
+    public static double findingSalarySumOfAllEmployees() {
+        int i = findingFirstElementOfArrayNotNull();
         double salarySum = 0;
-        for (int i = 0; i < employees.length; i++) {
+        for (; i < employees.length; i++) {
             if (employees[i] != null) {
                 salarySum = salarySum + employees[i].getSalary();
             }
@@ -48,8 +49,10 @@ public class Main {
     }
 
     public static double findingMinSalary() {
-        double minSalary = findingFirstElementOfArrayNotNull();
-        for (int i = 0; i < employees.length; i++) {
+        int i = findingFirstElementOfArrayNotNull();
+        double minSalary = employees[i].getSalary();
+
+        for (; i < employees.length; i++) {
             if (employees[i] != null) {
                 if (minSalary > employees[i].getSalary())
                     minSalary = employees[i].getSalary();
@@ -59,8 +62,9 @@ public class Main {
     }
 
     public static double findingMaxSalary() {
-        double maxSalary = findingFirstElementOfArrayNotNull();
-        for (int i = 0; i < employees.length; i++) {
+        int i = findingFirstElementOfArrayNotNull();
+        double maxSalary = employees[i].getSalary();
+        for (; i < employees.length; i++) {
             if (employees[i] != null) {
                 if (maxSalary < employees[i].getSalary())
                     maxSalary = employees[i].getSalary();
@@ -70,15 +74,14 @@ public class Main {
     }
 
     public static double findingAverageSalary() {
-        double salarySum = findingSalaryOfAllEmployees();
         int currentNumberOfEmployees = 0;
-        for (int i = 0; i < employees.length; i++) {
+        int i = findingFirstElementOfArrayNotNull();
+        for (; i < employees.length; i++) {
             if (employees[i] != null) {
                 currentNumberOfEmployees++;
             }
         }
-        double averageSalary = salarySum / currentNumberOfEmployees;
-        return averageSalary;
+        return findingSalarySumOfAllEmployees() / currentNumberOfEmployees;
     }
 
     public static void printingEmployeesFullName() {
